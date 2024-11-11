@@ -1,14 +1,11 @@
 # Zodiac Machine
 
-this repository contains the project, made with arduino, of our slot machine for the zodiac signs. it was created to be presented at the open days of the [Magistri Cumacini](https://www.magistricumacini.edu.it/)
+This repository contains the project, made with arduino, of our slot machine for the zodiac signs. it was created to be presented at the open days of the [Magistri Cumacini](https://www.magistricumacini.edu.it/)
 ## 🔰 Badges
 
-![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Machine?style=social)  
-![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Machine?style=social)  
-![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Machine)  
-![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Machine)  
-![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Machine)  
-![License](https://img.shields.io/github/license/0tia0/Zodiac-Machine)  
+![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Machine?style=social) ![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Machine?style=social)  
+
+![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Machine) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Machine) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Machine) ![License](https://img.shields.io/github/license/0tia0/Zodiac-Machine)  
 ## 👾 Tech Stack
 
 **Framework:** [PlatformIO](https://platformio.org/) from VSCode
@@ -46,7 +43,11 @@ this repository contains the project, made with arduino, of our slot machine for
 
 ## 📥 Installation
 
-cooming soon
+You must install and use PlatformIO, as we said in the [tech stack](https://github.com/0tia0/Zodiac-Machine?tab=readme-ov-file#-tech-stack)
+
+To recreate this project, you will need to replicate all the connections shown in the electrical diagram, as well as 3D print the plastic structure. Unfortunately, as mentioned in the FAQ, the detailed information for this step has not yet been published on GitHub. It may be released in a future version.
+
+At the moment, you'll find only the C++ code, which could be interesting for learning purposes. Additionally, there are several branches that demonstrate how we implemented the project step by step by joining the tiles.
 ## ⚙️ Deployment
 
 To deploy this project press the down arrow button placed right to the run button on VSCode, then select **Upload**. The code will be automatically uploaded on the connected arduino
@@ -56,7 +57,7 @@ Shortcut: **Ctrl + Alt + U**
 
 ## 📞 Support
 
-For support, you can create an issue on this reposityory, as long as the project is supported
+For support, you can create an [issue](https://github.com/0tia0/Zodiac-Machine/issues) on this reposityory, as long as the project is supported
 ## 👨🏻‍💻 Authors
 
 - Mattia Marelli: [@0tia0](https://www.github.com/0tia0)
