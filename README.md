@@ -69,7 +69,7 @@ For support, you can create an [issue](https://github.com/0tia0/Zodiac-Machine/i
 - Elia Simonetto: [@Evern](https://www.github.com/Evern0)
 
 
-## 🚀 About Us (2024)
+## 🚀 About Us (2024)  
 
 We are four students from Como, Italy, studying computer science at [I.T.I.S. Magistri Cumacini](https://www.magistricumacini.edu.it/) high school. We are passionate about technology and programming, and we love working on creative projects together.
 
