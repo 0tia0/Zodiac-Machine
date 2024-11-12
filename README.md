@@ -5,7 +5,7 @@ This repository contains the project, made with arduino, of our slot machine for
 
 ![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Machine?style=social) ![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Machine?style=social)  
 
-![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Machine) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Machine) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Machine) ![License](https://img.shields.io/github/license/0tia0/Zodiac-Machine)  
+![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Machine) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Machine) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Machine)
 ## 👾 Tech Stack
 
 **Framework:** [PlatformIO](https://platformio.org/) from VSCode
