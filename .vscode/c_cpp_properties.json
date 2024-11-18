@@ -10,13 +10,15 @@
             "includePath": [
                 "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/include",
                 "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/src",
+                "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/.pio/libdeps/megaatmega2560/LiquidCrystal_I2C",
+                "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/.pio/libdeps/megaatmega2560/Keypad/src",
                 "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/cores/arduino",
                 "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/variants/mega",
                 "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                 "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                 "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                 "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 ""
             ],
             "browse": {
@@ -24,13 +26,15 @@
                 "path": [
                     "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/include",
                     "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/src",
+                    "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/.pio/libdeps/megaatmega2560/LiquidCrystal_I2C",
+                    "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
+                    "C:/Users/Mattia/Documents/Scuola/Sistemi/Zodiac Machine/.pio/libdeps/megaatmega2560/Keypad/src",
                     "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/cores/arduino",
                     "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/variants/mega",
                     "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/EEPROM/src",
                     "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/HID/src",
                     "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/SPI/src",
                     "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/SoftwareSerial/src",
-                    "C:/Users/Mattia/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     ""
                 ]
             },
