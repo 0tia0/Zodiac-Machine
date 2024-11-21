@@ -3,9 +3,7 @@
 This repository contains the project, made with arduino, of our slot machine for the zodiac signs. it was created to be presented at the open days of the [Magistri Cumacini](https://www.magistricumacini.edu.it/)
 ## 🔰 Badges
 
-![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Machine?style=social) ![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Machine?style=social)  
-
-![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Machine) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Machine) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Machine) ![License](https://img.shields.io/github/license/0tia0/Zodiac-Machine)  
+![GitHub Repo stars](https://img.shields.io/github/stars/0tia0/Zodiac-Machine?style=for-the-badge) ![GitHub forks](https://img.shields.io/github/forks/0tia0/Zodiac-Machine?style=for-the-badge)   ![GitHub issues](https://img.shields.io/github/issues/0tia0/Zodiac-Machine?style=for-the-badge) ![GitHub pull requests](https://img.shields.io/github/issues-pr/0tia0/Zodiac-Machine?style=for-the-badge) ![GitHub contributors](https://img.shields.io/github/contributors/0tia0/Zodiac-Machine?style=for-the-badge) ![License](https://img.shields.io/github/license/0tia0/Zodiac-Machine?style=for-the-badge)  
 ## 👾 Tech Stack
 
 **Framework:** [PlatformIO](https://platformio.org/) from VSCode
