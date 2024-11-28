@@ -296,6 +296,7 @@ void resetMotor() {
  * @param date La data da scrivere
  */
 void printDate(Date date) {
+    // Scrivi la data nel monitor seriale
     Serial.print(date.day);
     Serial.print("/");
     Serial.print(date.month);
