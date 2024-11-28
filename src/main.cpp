@@ -1,5 +1,5 @@
 //
-// ZodiacMachine v1.0.0/DEV
+// ZodiacMachine v1.0.1/DEV
 // By Lorenzo Rocca, Mattia Marelli, Alessio Randò, Elia Simonetto
 //
 
@@ -9,48 +9,54 @@
 #include <Keypad.h>
 #include <LiquidCrystal_I2C.h>
 #include <Stepper.h>
+#include <avr/wdt.h>
 
 // Macro x il tastierino
-#define KEYPAD_ROWS                 4
-#define KEYPAD_COLUMNS              4
+#define KEYPAD_ROWS 4
+#define KEYPAD_COLUMNS 4
 
-#define KEYPAD_ROW_1_PIN            2
-#define KEYPAD_ROW_2_PIN            3
-#define KEYPAD_ROW_3_PIN            4
-#define KEYPAD_ROW_4_PIN            5
+#define KEYPAD_ROW_1_PIN 2
+#define KEYPAD_ROW_2_PIN 3
+#define KEYPAD_ROW_3_PIN 4
+#define KEYPAD_ROW_4_PIN 5
 
-#define KEYPAD_COLUMN_1_PIN         6
-#define KEYPAD_COLUMN_2_PIN         7
-#define KEYPAD_COLUMN_3_PIN         8
-#define KEYPAD_COLUMN_4_PIN         9
+#define KEYPAD_COLUMN_1_PIN 6
+#define KEYPAD_COLUMN_2_PIN 7
+#define KEYPAD_COLUMN_3_PIN 8
+#define KEYPAD_COLUMN_4_PIN 9
 
 // Macro x segno zodiacale
-#define NORMAL_RANGE_START          1, 20, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356
-#define NORMAL_RANGE_END            19, 49, 79, 109, 139, 170, 201, 232, 262, 292, 321, 355, 365
-#define BISESTILE_RANGE_START       1, 20, 51, 81, 111, 141, 172, 203, 234, 264, 294, 323, 357
-#define BISESTILE_RANGE_END         19, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356, 366
+#define NORMAL_RANGE_START 1, 20, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356
+#define NORMAL_RANGE_END 19, 49, 79, 109, 139, 170, 201, 232, 262, 292, 321, 355, 365
+#define BISESTILE_RANGE_START 1, 20, 51, 81, 111, 141, 172, 203, 234, 264, 294, 323, 357
+#define BISESTILE_RANGE_END 19, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356, 366
+
+// Macro x buzzer
+#define BUZZER_PIN 53
 
 // Macro x motore
-#define MOTOR_PIN_1                 10
-#define MOTOR_PIN_2                 11
-#define MOTOR_PIN_3                 12
-#define MOTOR_PIN_4                 13
+#define MOTOR_PIN_1 10
+#define MOTOR_PIN_2 11
+#define MOTOR_PIN_3 12
+#define MOTOR_PIN_4 13
 
-#define MOTOR_STEPS                 200
-#define MOTOR_ROTATION_RPM          40
-#define MOTOR_RESET_RPM             60
+#define MOTOR_STEPS 200
+#define MOTOR_ROTATION_RPM 40
+#define MOTOR_RESET_RPM 60
 
-#define AFTER_ROTATION_MS           10000
+#define AFTER_ROTATION_MS 10000
 
 // Macro LCD
-#define AGE_OF_BIRTH_TITLE          "Data di nascita:"
+#define AGE_OF_BIRTH_TITLE "Data di nascita:"
+#define AGE_DEFAULT_STRING "__/__/____"
 
 #pragma endregion
 
 #pragma region Strutture dati
 
 // Struttura per contenere la data
-struct Date {
+struct Date
+{
     // Parametri della data
     int day;
     int month;
@@ -61,19 +67,20 @@ struct Date {
 };
 
 // Struttura per contenere le informazioni del segno zodiacale
-struct ZodiacSign {
+struct ZodiacSign
+{
     // La data
     Date date;
 
     // Dettagli del segno
     int sign;
     int matrice;
-    char* name;
+    char *name;
     bool cusp;
 };
 
 // I nomi dei segni zodiacali
-char* zodiacSignName[] {
+char *zodiacSignName[]{
     "CAPRICORNO",
     "ACQUARIO",
     "PESCI",
@@ -85,8 +92,7 @@ char* zodiacSignName[] {
     "VERGINE",
     "BILANCIA",
     "SCORPIONE",
-    "SAGGITTARIO"
-};
+    "SAGGITTARIO"};
 
 #pragma endregion
 
@@ -101,7 +107,8 @@ LiquidCrystal_I2C lcd(0x3f, 16, 2);
  * @param title Il titolo da stampare
  * @param subTitle Il sottotitolo
  */
-void writeToLCD(char* title, char* subTitle) {
+void writeToLCD(char *title, char *subTitle)
+{
     // Azzera il display LCD
     lcd.backlight();
     lcd.clear();
@@ -124,24 +131,21 @@ char hexaKeys[KEYPAD_ROWS][KEYPAD_COLUMNS] = {
     {'1', '2', '3', 'A'},
     {'4', '5', '6', 'B'},
     {'7', '8', '9', 'C'},
-    {'*', '0', '#', 'D'}
-};
+    {'*', '0', '#', 'D'}};
 
 // Pin a cui sono state collegate le linee
 byte pinRows[KEYPAD_ROWS] = {
-    KEYPAD_ROW_1_PIN, 
-    KEYPAD_ROW_2_PIN, 
-    KEYPAD_ROW_3_PIN, 
-    KEYPAD_ROW_4_PIN
-};
+    KEYPAD_ROW_1_PIN,
+    KEYPAD_ROW_2_PIN,
+    KEYPAD_ROW_3_PIN,
+    KEYPAD_ROW_4_PIN};
 
 // Pin a cui sono state collegate le colonne
 byte pinCols[KEYPAD_COLUMNS] = {
-    KEYPAD_COLUMN_1_PIN, 
-    KEYPAD_COLUMN_2_PIN, 
-    KEYPAD_COLUMN_3_PIN, 
-    KEYPAD_COLUMN_4_PIN
-};
+    KEYPAD_COLUMN_1_PIN,
+    KEYPAD_COLUMN_2_PIN,
+    KEYPAD_COLUMN_3_PIN,
+    KEYPAD_COLUMN_4_PIN};
 
 // Inizializza il tastierino
 Keypad keypad = Keypad(makeKeymap(hexaKeys), pinRows, pinCols, KEYPAD_ROWS, KEYPAD_COLUMNS);
@@ -151,14 +155,17 @@ Keypad keypad = Keypad(makeKeymap(hexaKeys), pinRows, pinCols, KEYPAD_ROWS, KEYP
  *
  * @return Il carattere del tasto premuto
  */
-char getKey() {
+char getKey()
+{
     // Resta in loop finché non viene letto un carattere valido
-    while (1) {
+    while (1)
+    {
         // Leggi il carattere attualmente selezionato.
         char key = keypad.getKey();
 
         // Se il carattere è diverso da 0, ritornalo
-        if (key) {
+        if (key)
+        {
             return key;
         }
     }
@@ -174,9 +181,11 @@ char getKey() {
  * @param date La data da controllare
  * @return Se è bisestile o meno
  */
-bool checkBisestile(Date* date) {
+bool checkBisestile(Date *date)
+{
     // Controllo per vedere se la data è bisestile
-    if ((date->year % 4 == 0 && date->year % 100 != 0) || (date->year % 400 == 0)) {
+    if ((date->year % 4 == 0 && date->year % 100 != 0) || (date->year % 400 == 0))
+    {
         // Imposta la data come bisestile e ritorna true
         return date->bisestile = true;
     }
@@ -191,7 +200,8 @@ bool checkBisestile(Date* date) {
  * @param date La data da convertire
  * @return int Il numero di giorni dall'inizio dell'anno
  */
-int fromDateToDays(Date date) {
+int fromDateToDays(Date date)
+{
     // Definizione dei numeri totali
     int totalDays = 0;
     // Per ciascun mese, il numero di giorni già passati
@@ -201,12 +211,48 @@ int fromDateToDays(Date date) {
     totalDays = daysGone[date.month - 1] + date.day;
 
     // Incrementa di uno se si è superato febbraio e ci si trova in un anno bisestile
-    if (date.month > 2 && date.bisestile) {
+    if (date.month > 2 && date.bisestile)
+    {
         totalDays++;
     }
 
     // Ritorna il numero totale di giorni passati
     return totalDays;
+}
+
+/**
+ * @brief check if the date exist
+ *
+ * @param d the date to check
+ * @return true
+ * @return false
+ */
+bool dateExist(Date d)
+{
+    checkBisestile(&d);
+
+    // giorni in ogni mese
+    int dayInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+
+    // controllo mese
+    if (d.month < 1 || d.month > 12)
+    {
+        return false;
+    }
+
+    // controllo specifico per febbraio bisestile
+    if (d.month == 2 && d.bisestile)
+    {
+        dayInMonth[1] = 29;
+    }
+
+    // controllo giorno
+    if (d.day < 1 || d.day > dayInMonth[d.month - 1])
+    {
+        return false;
+    }
+
+    return true;
 }
 
 #pragma endregion
@@ -219,7 +265,8 @@ int fromDateToDays(Date date) {
  * @param date La data da utilizzare
  * @return La struttura contenente tutte le informazioni necessarie
  */
-ZodiacSign calculateSign(Date date) {
+ZodiacSign calculateSign(Date date)
+{
     // Definisci la struttura da ritornare in seguito
     ZodiacSign zodiacSign;
     zodiacSign.date = date;
@@ -233,13 +280,14 @@ ZodiacSign calculateSign(Date date) {
     // Definisco i range per i giorni
     int signRange[2][13] = {
         {zodiacSign.date.bisestile ? BISESTILE_RANGE_START : NORMAL_RANGE_START},
-        {zodiacSign.date.bisestile ? BISESTILE_RANGE_END : NORMAL_RANGE_END}
-    };
+        {zodiacSign.date.bisestile ? BISESTILE_RANGE_END : NORMAL_RANGE_END}};
 
     // Itera finché non si trova il range corretto
-    for (int i = 0; i < 13; i++) {
+    for (int i = 0; i < 13; i++)
+    {
         // Se ci si trova nel range, completa il calcolo
-        if (totalDays >= signRange[0][i] && totalDays <= signRange[1][i]) {
+        if (totalDays >= signRange[0][i] && totalDays <= signRange[1][i])
+        {
             // Applica il segno
             zodiacSign.sign = i == 12 ? 1 : i + 1;
             break;
@@ -262,10 +310,11 @@ Stepper motor(MOTOR_STEPS, MOTOR_PIN_1, MOTOR_PIN_2, MOTOR_PIN_3, MOTOR_PIN_4);
 
 /**
  * @brief Ruota il motore di tot. unità
- * 
+ *
  * @param units Le unità da ruotare
  */
-void rotateMotor(int units) {
+void rotateMotor(int units)
+{
     // Steps per unità
     int stepsPerUnit = MOTOR_STEPS / 12;
 
@@ -280,7 +329,8 @@ void rotateMotor(int units) {
 /**
  * @brief Resetta il motore alla sua posizione iniziale
  */
-void resetMotor() {
+void resetMotor()
+{
     // Imposta la velictà e ruota
     motor.setSpeed(MOTOR_RESET_RPM);
     motor.step(-steps);
@@ -292,10 +342,11 @@ void resetMotor() {
 
 /**
  * @brief La data da scrivere in seriale
- * 
+ *
  * @param date La data da scrivere
  */
-void printDate(Date date) {
+void printDate(Date date)
+{
     // Scrivi la data nel monitor seriale
     Serial.print(date.day);
     Serial.print("/");
@@ -311,7 +362,8 @@ void printDate(Date date) {
 /**
  * @brief Funzione di setup dell'arduino
  */
-void setup() {
+void setup()
+{
     // Inizializza la comunicazione seriale
     Serial.begin(9600);
 
@@ -319,12 +371,13 @@ void setup() {
     lcd.init();
 
     // Imposta i pin del tastierino come pin di INPUT
-    for (int i = 2; i <= 9; i++) {
+    for (int i = 2; i <= 9; i++)
+    {
         pinMode(i, INPUT);
     }
 
     // Array per la data, si modifica durante l'input
-    char inputDate[11] = "__/__/____";
+    char inputDate[11] = AGE_DEFAULT_STRING;
 
     // Scrivi il prompt sul display LCD
     writeToLCD(AGE_OF_BIRTH_TITLE, inputDate);
@@ -332,13 +385,18 @@ void setup() {
     // Definisco il cursore
     int cursor = 0;
 
+    // Costruisci la data sulla base dei dati letti
+    Date date;
+
     // Itero fino alla conferma
-    while (1) {
+    while (1)
+    {
         // Attendo l'input dell'utente
         char key = getKey();
 
         // Se si sta inserendo un numero
-        if (key >= '0' && key <= '9' && cursor < 10) {
+        if (key >= '0' && key <= '9' && cursor < 10)
+        {
             // Scrivi il valore nel buffer
             inputDate[cursor] = key;
             cursor++;
@@ -346,11 +404,31 @@ void setup() {
             // Aggiorna il prompt
             writeToLCD(AGE_OF_BIRTH_TITLE, inputDate);
         }
-        else if (key == '#' && cursor > 9) {
-            // Completa l'input della data di nascita
-            break;
+        else if (key == '#' && cursor > 9)
+        {
+            // Completa l'input della data di nascita e ne controlla la validità
+            date.day = (inputDate[0] - '0') * 10 + (inputDate[1] - '0');
+            date.month = (inputDate[3] - '0') * 10 + (inputDate[4] - '0');
+            date.year = (inputDate[6] - '0') * 1000 + (inputDate[7] - '0') * 100 + (inputDate[8] - '0') * 10 + (inputDate[9] - '0');
+
+            if (dateExist(date))
+            {
+                break;
+            }
+            else
+            {
+                writeToLCD("Errore:", "Data non valida");
+                delay(3000);
+                for (int i = 0; i < 11; i++)
+                {
+                    inputDate[i] = AGE_DEFAULT_STRING[i];
+                }
+                cursor = 0;
+                writeToLCD(AGE_OF_BIRTH_TITLE, inputDate);
+            }
         }
-        else if (key == '*' && cursor > 0) {
+        else if (key == '*' && cursor > 0)
+        {
             // Decrementa il cursore (di due se ci si trova prima dello slash)
             cursor -= cursor == 3 || cursor == 6 ? 2 : 1;
             inputDate[cursor] = '_';
@@ -360,7 +438,8 @@ void setup() {
         }
 
         // Scrittura dello slash nei casi specifici
-        if (cursor == 2 || cursor == 5) {
+        if (cursor == 2 || cursor == 5)
+        {
             // Scrivi lo slash
             inputDate[cursor] = '/';
 
@@ -368,12 +447,6 @@ void setup() {
             cursor++;
         }
     }
-
-    // Costruisci la data sulla base dei dati letti
-    Date date;
-    date.day = (inputDate[0] - '0') * 10 + (inputDate[1] - '0');
-    date.month = (inputDate[3] - '0') * 10 + (inputDate[4] - '0');
-    date.year = (inputDate[6] - '0') * 1000 + (inputDate[7] - '0') * 100 + (inputDate[8] - '0') * 10 + (inputDate[9] - '0');
 
     // Scrivi la data x debug
     printDate(date);
@@ -386,7 +459,7 @@ void setup() {
 
     // Ruota il motore
     rotateMotor(sign.sign);
-    
+
     // Scrivi a schermo il segno zodiacale
     writeToLCD("Segno Zodiacale:", zodiacSignName[sign.sign - 1]);
 
@@ -398,12 +471,30 @@ void setup() {
 
     // Resetta il motore
     resetMotor();
+
+    // Reset effetivo codice
+    delay(5000);
+
+    // Beep restart
+    pinMode(BUZZER_PIN, OUTPUT); // Imposta il pin del buzzer come uscita
+
+    // Emette 5 beep
+    for (int i = 0; i < 2; i++)
+    {
+        tone(BUZZER_PIN, 5000); // Suona il buzzer a 1000 Hz
+        delay(200);
+        noTone(BUZZER_PIN); // Ferma il suono
+        delay(200);
+    }
+
+    wdt_enable(WDTO_15MS);
 }
 
 /**
  * @brief Funzione loop. Attualmente, non esegue nulla
  */
-void loop() {
+void loop()
+{
     return;
 }
 
