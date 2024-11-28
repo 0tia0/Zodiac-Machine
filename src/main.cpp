@@ -8,6 +8,7 @@
 // Inclusione librerie
 #include <Keypad.h>
 #include <LiquidCrystal_I2C.h>
+#include <Stepper.h>
 
 // Macro x il tastierino
 #define KEYPAD_ROWS                 4
@@ -28,6 +29,18 @@
 #define NORMAL_RANGE_END            19, 49, 79, 109, 139, 170, 201, 232, 262, 292, 321, 355, 365
 #define BISESTILE_RANGE_START       1, 20, 51, 81, 111, 141, 172, 203, 234, 264, 294, 323, 357
 #define BISESTILE_RANGE_END         19, 50, 80, 110, 140, 171, 202, 233, 263, 293, 322, 356, 366
+
+// Macro x motore
+#define MOTOR_PIN_1                 10
+#define MOTOR_PIN_2                 11
+#define MOTOR_PIN_3                 12
+#define MOTOR_PIN_4                 13
+
+#define MOTOR_STEPS                 200
+#define MOTOR_ROTATION_RPM          40
+#define MOTOR_RESET_RPM             60
+
+#define AFTER_ROTATION_MS           10000
 
 // Macro LCD
 #define AGE_OF_BIRTH_TITLE          "Data di nascita:"
@@ -239,6 +252,42 @@ ZodiacSign calculateSign(Date date) {
 
 #pragma endregion
 
+#pragma region Motore
+
+// Contatore degli steps che il motore ha fatto dall'inizio
+int steps = 0;
+
+// Definizione del motore
+Stepper motor(MOTOR_STEPS, MOTOR_PIN_1, MOTOR_PIN_2, MOTOR_PIN_3, MOTOR_PIN_4);
+
+/**
+ * @brief Ruota il motore di tot. unità
+ * 
+ * @param units Le unità da ruotare
+ */
+void rotateMotor(int units) {
+    // Steps per unità
+    int stepsPerUnit = MOTOR_STEPS / 12;
+
+    // Calcola gli steps da fare
+    steps = stepsPerUnit * units;
+
+    // Imposta la velictà e ruota
+    motor.setSpeed(MOTOR_ROTATION_RPM);
+    motor.step(steps);
+}
+
+/**
+ * @brief Resetta il motore alla sua posizione iniziale
+ */
+void resetMotor() {
+    // Imposta la velictà e ruota
+    motor.setSpeed(MOTOR_RESET_RPM);
+    motor.step(-steps);
+}
+
+#pragma endregion
+
 #pragma region Debug
 
 /**
@@ -331,8 +380,23 @@ void setup() {
     // Calcola il segno basandosi sulla data
     ZodiacSign sign = calculateSign(date);
 
+    // Scrivi un messaggio temporaneo per indicare il calcolo del segno
+    writeToLCD("Sto calcolando", "il tuo segno...");
+
+    // Ruota il motore
+    rotateMotor(sign.sign);
+    
     // Scrivi a schermo il segno zodiacale
     writeToLCD("Segno Zodiacale:", zodiacSignName[sign.sign - 1]);
+
+    // Attendi tot. secondi
+    delay(AFTER_ROTATION_MS);
+
+    // Avviso di reset
+    writeToLCD("Reset Macchina", "Non toccare!");
+
+    // Resetta il motore
+    resetMotor();
 }
 
 /**
