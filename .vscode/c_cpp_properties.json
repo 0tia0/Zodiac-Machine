@@ -10,6 +10,7 @@
             "includePath": [
                 "E:/Progetti/Progetti Arduino/Zodiac-Machine/include",
                 "E:/Progetti/Progetti Arduino/Zodiac-Machine/src",
+                "E:/Progetti/Progetti Arduino/Zodiac-Machine/.pio/libdeps/megaatmega2560/Stepper/src",
                 "E:/Progetti/Progetti Arduino/Zodiac-Machine/.pio/libdeps/megaatmega2560/LiquidCrystal_I2C",
                 "C:/Users/loren/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                 "E:/Progetti/Progetti Arduino/Zodiac-Machine/.pio/libdeps/megaatmega2560/Keypad/src",
@@ -26,6 +27,7 @@
                 "path": [
                     "E:/Progetti/Progetti Arduino/Zodiac-Machine/include",
                     "E:/Progetti/Progetti Arduino/Zodiac-Machine/src",
+                    "E:/Progetti/Progetti Arduino/Zodiac-Machine/.pio/libdeps/megaatmega2560/Stepper/src",
                     "E:/Progetti/Progetti Arduino/Zodiac-Machine/.pio/libdeps/megaatmega2560/LiquidCrystal_I2C",
                     "C:/Users/loren/.platformio/packages/framework-arduino-avr/libraries/Wire/src",
                     "E:/Progetti/Progetti Arduino/Zodiac-Machine/.pio/libdeps/megaatmega2560/Keypad/src",
